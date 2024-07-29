@@ -5,7 +5,10 @@ const searchInput = document.querySelector('.search-input');
 const themeSwitch = document.getElementById('theme-switch');
 const logo = document.querySelector('.logo svg');
 
-// Shrink navbar on scroll with GSAP
+// GSAP ScrollTrigger setup
+gsap.registerPlugin(ScrollTrigger);
+
+// Navbar shrink on scroll
 gsap.to(navbar, {
     scrollTrigger: {
         start: 'top -100',
@@ -13,7 +16,6 @@ gsap.to(navbar, {
         scrub: true
     },
     height: '60px',
-    padding: '0.5rem',
     backgroundColor: 'rgba(44, 62, 80, 0.9)',
     boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
 });
@@ -91,33 +93,78 @@ logo.addEventListener('mouseleave', () => {
     });
 });
 
-// Nav link hover animation
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        gsap.to(link, {
-            y: -3,
-            duration: 0.2,
-            ease: 'power2.out'
-        });
-    });
-
-    link.addEventListener('mouseleave', () => {
-        gsap.to(link, {
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.out'
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
         });
     });
 });
 
-// Parallax effect for content
-gsap.to('.content', {
-    y: 100,
-    opacity: 0,
+// Animate elements on scroll
+const animatedElements = document.querySelectorAll('.animated-text, .service-card, .portfolio-item');
+
+animatedElements.forEach(element => {
+    gsap.from(element, {
+        scrollTrigger: {
+            trigger: element,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        ease: 'power2.out'
+    });
+});
+
+// Parallax effect for hero section
+gsap.to('.hero', {
     scrollTrigger: {
-        trigger: '.content',
-        start: 'top center',
-        end: 'bottom center',
         scrub: true
-    }
+    },
+    y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+    ease: 'none'
+});
+
+// Portfolio item hover effect
+document.querySelectorAll('.portfolio-item').forEach(item => {
+    const overlay = item.querySelector('.portfolio-overlay');
+    
+    item.addEventListener('mouseenter', () => {
+        gsap.to(overlay, {
+            opacity: 1,
+            duration: 0.3
+        });
+    });
+    
+    item.addEventListener('mouseleave', () => {
+        gsap.to(overlay, {
+            opacity: 0,
+            duration: 0.3
+        });
+    });
+});
+
+// Form submission animation
+const form = document.querySelector('.contact-form');
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    gsap.to(form, {
+        opacity: 0,
+        y: -50,
+        duration: 0.5,
+        onComplete: () => {
+            form.reset();
+            gsap.to(form, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                delay: 0.5
+            });
+        }
+    });
 });
