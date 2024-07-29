@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #ecf0f1;
+    --primary-color: #ffffff;
+    --secondary-color: #f0f0f0;
     --accent-color: #3498db;
-    --text-color: #333;
-    --background-color: #fff;
+    --text-color: #333333;
+    --background-color: #ffffff;
     --navbar-height: 80px;
 }
 
 [data-theme="dark"] {
-    --primary-color: #34495e;
-    --secondary-color: #ecf0f1;
+    --primary-color: #1a1a1a;
+    --secondary-color: #2c2c2c;
     --accent-color: #3498db;
-    --text-color: #ecf0f1;
-    --background-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --background-color: #121212;
 }
 
 * {
@@ -33,6 +33,7 @@ body {
 
 .navbar {
     background-color: var(--primary-color);
+    backdrop-filter: blur(10px);
     padding: 0 2rem;
     position: fixed;
     width: 100%;
@@ -41,6 +42,7 @@ body {
     z-index: 1000;
     transition: all 0.3s ease;
     height: var(--navbar-height);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
@@ -54,7 +56,7 @@ body {
 
 .logo svg {
     transition: transform 0.3s ease;
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .logo:hover svg {
@@ -71,7 +73,7 @@ body {
 }
 
 .nav-link {
-    color: var(--secondary-color);
+    color: var(--text-color);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 600;
@@ -187,9 +189,19 @@ body {
 .hamburger span {
     width: 25px;
     height: 3px;
-    background-color: var(--secondary-color);
+    background-color: var(--text-color);
     margin: 2px 0;
     transition: all 0.3s ease;
+}
+
+.scroll-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: var(--accent-color);
+    width: 0;
+    transition: width 0.3s ease;
 }
 
 main {
@@ -203,18 +215,34 @@ main {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://picsum.photos/1920/1080') no-repeat center center/cover;
-    color: #fff;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--primary-color);
+}
+
+#particles-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 1rem;
+    color: var(--text-color);
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    color: var(--text-color);
 }
 
 .cta-button {
@@ -225,21 +253,24 @@ main {
     text-decoration: none;
     border-radius: 5px;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .cta-button:hover {
     background-color: #2980b9;
+    transform: translateY(-3px);
 }
 
 section {
     padding: 5rem 2rem;
+    background-color: var(--background-color);
 }
 
-h2 {
+.section-title {
     text-align: center;
     margin-bottom: 3rem;
     font-size: 2.5rem;
+    color: var(--text-color);
 }
 
 .about-content {
@@ -263,6 +294,32 @@ h2 {
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.about-image img:hover {
+    transform: scale(1.05);
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
 .service-grid {
@@ -274,11 +331,12 @@ h2 {
 }
 
 .service-card {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .service-card:hover {
@@ -290,6 +348,28 @@ h2 {
     font-size: 3rem;
     color: var(--accent-color);
     margin-bottom: 1rem;
+}
+
+.portfolio-filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    color: var(--accent-color);
 }
 
 .portfolio-grid {
@@ -304,6 +384,7 @@ h2 {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .portfolio-item img {
@@ -347,6 +428,32 @@ h2 {
     font-size: 1rem;
 }
 
+.testimonials {
+    background-color: var(--secondary-color);
+}
+
+.testimonial-slider {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimonial-slide {
+    padding: 2rem;
+}
+
+.testimonial-slide p {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.testimonial-slide h4 {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+}
+
 .contact-form {
     max-width: 600px;
     margin: 0 auto;
@@ -361,6 +468,8 @@ h2 {
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
     font-size: 1rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
 }
 
 .contact-form textarea {
@@ -377,18 +486,43 @@ h2 {
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .submit-button:hover {
     background-color: #2980b9;
+    transform: translateY(-3px);
 }
 
 footer {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: var(--text-color);
     text-align: center;
     padding: 1rem;
+}
+
+.floating-nav {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.floating-nav-btn {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.floating-nav-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-3px);
 }
 
 @media screen and (max-width: 768px) {
